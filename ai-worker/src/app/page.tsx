@@ -3,19 +3,11 @@
 import {
   Sparkle,
   ArrowRight,
-  MagicWand,
   Heart,
-  Brain,
-  MusicNotes,
-  Cat,
-  Rocket,
-  Star,
-  Cloud,
   Sun,
   PaintBrush,
   BookOpen,
   GameController,
-  Lightbulb,
   GithubLogo,
   TwitterLogo,
   Rss,
@@ -36,9 +28,9 @@ import { useState } from "react";
 /* ═══ NAV ═══ */
 function Nav() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 h-14 flex items-center justify-between px-5 md:px-10 bg-white/80 backdrop-blur-lg border-b border-border-light">
+    <nav className="fixed top-0 left-0 right-0 z-50 h-14 flex items-center justify-between px-5 md:px-10 bg-surface-blue/80 backdrop-blur-lg border-b border-border-light">
       <div className="flex items-center gap-2">
-        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-accent to-accent-deep flex items-center justify-center shadow-md shadow-accent/20">
+        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-accent to-accent-deep flex items-center justify-center shadow-md shadow-accent/30">
           <Sparkle weight="fill" className="text-white text-sm" />
         </div>
         <span className="font-bold text-base">AI 小世界</span>
@@ -57,21 +49,14 @@ function Nav() {
 function Hero() {
   return (
     <section className="relative pt-14 overflow-hidden sky-gradient">
-      {/* Clouds */}
-      <div className="absolute top-16 left-[5%] cloud-shape w-40 h-12 opacity-60 animate-cloud" />
-      <div className="absolute top-28 right-[8%] cloud-shape w-56 h-14 opacity-40 animate-cloud" style={{ animationDelay: "5s" }} />
-      <div className="absolute top-44 left-[30%] cloud-shape w-32 h-10 opacity-30 animate-cloud" style={{ animationDelay: "10s" }} />
+      <div className="absolute top-16 left-[5%] cloud-shape w-40 h-12 opacity-70 animate-cloud" />
+      <div className="absolute top-28 right-[8%] cloud-shape w-56 h-14 opacity-50 animate-cloud" style={{ animationDelay: "5s" }} />
+      <div className="absolute top-44 left-[30%] cloud-shape w-32 h-10 opacity-40 animate-cloud" style={{ animationDelay: "10s" }} />
 
-      {/* Floating decorations */}
-      <ParallaxFloat className="absolute top-24 right-[15%] text-4xl opacity-60 pointer-events-none hidden md:block" offset={12}>
-        ☁️
-      </ParallaxFloat>
-      <ParallaxFloat className="absolute top-40 left-[10%] text-3xl opacity-50 pointer-events-none hidden md:block" offset={8}>
-        🦋
-      </ParallaxFloat>
-      <ParallaxFloat className="absolute bottom-32 right-[10%] text-4xl opacity-50 pointer-events-none hidden md:block" offset={15}>
-        🌈
-      </ParallaxFloat>
+      <ParallaxFloat className="absolute top-24 right-[15%] text-4xl opacity-70 pointer-events-none hidden md:block" offset={12}>☁️</ParallaxFloat>
+      <ParallaxFloat className="absolute top-40 left-[10%] text-3xl opacity-60 pointer-events-none hidden md:block" offset={8}>🦋</ParallaxFloat>
+      <ParallaxFloat className="absolute bottom-32 right-[10%] text-4xl opacity-60 pointer-events-none hidden md:block" offset={15}>🌈</ParallaxFloat>
+      <ParallaxFloat className="absolute bottom-48 left-[20%] text-3xl opacity-50 pointer-events-none hidden md:block" offset={10}>🌸</ParallaxFloat>
 
       <div className="relative z-10 max-w-3xl mx-auto text-center px-6 pt-20 pb-16 flex flex-col items-center gap-6">
         <div className="badge badge-blue">
@@ -112,7 +97,7 @@ function Marquee() {
     "🌙 晚安故事", "🍕 美食推荐", "🎭 表情包生成", "🦋 蝴蝶图鉴", "☁️ 云朵分类",
   ];
   return (
-    <div className="py-5 bg-white border-y border-border-light overflow-hidden">
+    <div className="py-5 bg-surface-blue border-y border-border-light overflow-hidden">
       <div className="flex animate-marquee" style={{ width: "max-content" }}>
         {[...items, ...items, ...items].map((t, i) => (
           <div key={i} className="px-6 text-lg whitespace-nowrap hover:scale-110 transition-transform cursor-default text-foreground/70">
@@ -132,7 +117,8 @@ const PLAY_ITEMS = [
     desc: "告诉它你梦到了什么，它帮你画出来。画风从水彩到像素，随你挑。",
     badge: "热门",
     badgeClass: "badge-cute",
-    color: "border-accent-cute/30 bg-accent-cute/5",
+    borderColor: "#f472b6",
+    bgColor: "rgba(244,114,182,0.06)",
   },
   {
     emoji: "🐱",
@@ -140,7 +126,8 @@ const PLAY_ITEMS = [
     desc: "上传你家猫的照片，AI 告诉你它此刻在想什么。准确率……大概比你自己猜高一点。",
     badge: "可爱",
     badgeClass: "badge-warm",
-    color: "border-accent-warm/30 bg-accent-warm/5",
+    borderColor: "#fb923c",
+    bgColor: "rgba(251,146,60,0.06)",
   },
   {
     emoji: "🎵",
@@ -148,7 +135,8 @@ const PLAY_ITEMS = [
     desc: "随便哼几秒，AI 帮你补完整首歌。风格可选：爵士、古风、电子、或者「随便」。",
     badge: "新功能",
     badgeClass: "badge-mint",
-    color: "border-accent-mint/30 bg-accent-mint/5",
+    borderColor: "#34d399",
+    bgColor: "rgba(52,211,153,0.06)",
   },
   {
     emoji: "📝",
@@ -156,7 +144,8 @@ const PLAY_ITEMS = [
     desc: "给它一个词，它还你一首诗。可以是现代诗、古诗、俳句，甚至打油诗。",
     badge: "文艺",
     badgeClass: "badge-lavender",
-    color: "border-accent-lavender/30 bg-accent-lavender/5",
+    borderColor: "#a78bfa",
+    bgColor: "rgba(167,139,250,0.06)",
   },
   {
     emoji: "🔮",
@@ -164,7 +153,8 @@ const PLAY_ITEMS = [
     desc: "AI 根据你的心情和天气，给你一句温暖又神秘的小建议。仅供娱乐哦~",
     badge: "玄学",
     badgeClass: "badge-blue",
-    color: "border-accent/30 bg-accent/5",
+    borderColor: "#38bdf8",
+    bgColor: "rgba(56,189,248,0.06)",
   },
   {
     emoji: "🧩",
@@ -172,13 +162,14 @@ const PLAY_ITEMS = [
     desc: "AI 出题你来猜，或者你出题 AI 来猜。看谁先笑场。",
     badge: "互动",
     badgeClass: "badge-cute",
-    color: "border-accent-cute/30 bg-accent-cute/5",
+    borderColor: "#f472b6",
+    bgColor: "rgba(244,114,182,0.06)",
   },
 ];
 
 function Playground() {
   return (
-    <section id="play" className="px-6 md:px-10 py-16 md:py-24 bg-white">
+    <section id="play" className="px-6 md:px-10 py-16 md:py-24 bg-surface">
       <div className="max-w-6xl mx-auto">
         <RevealOnScroll className="mb-10">
           <div className="flex items-center gap-2 mb-3">
@@ -194,7 +185,10 @@ function Playground() {
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {PLAY_ITEMS.map((item) => (
             <StaggerItem key={item.title}>
-              <div className={`card-colored p-6 ${item.color} h-full flex flex-col gap-3`}>
+              <div
+                className="card-colored p-6 h-full flex flex-col gap-3"
+                style={{ borderColor: item.borderColor, backgroundColor: item.bgColor }}
+              >
                 <div className="flex items-start justify-between">
                   <span className="text-4xl animate-bounce-soft">{item.emoji}</span>
                   <span className={`badge ${item.badgeClass}`}>{item.badge}</span>
@@ -212,22 +206,21 @@ function Playground() {
 
 /* ═══ AI FRIENDS ═══ */
 const FRIENDS = [
-  { name: "小蓝", emoji: "🐧", desc: "喜欢画画的企鹅", skill: "水彩画", color: "bg-accent/10 border-accent/20" },
-  { name: "花花", emoji: "🌸", desc: "爱写诗的樱花", skill: "俳句", color: "bg-accent-cute/10 border-accent-cute/20" },
-  { name: "豆豆", emoji: "🫘", desc: "会作曲的咖啡豆", skill: "爵士乐", color: "bg-accent-warm/10 border-accent-warm/20" },
-  { name: "云朵", emoji: "☁️", desc: "漂浮的哲学家", skill: "冷笑话", color: "bg-accent/10 border-accent/20" },
-  { name: "星星", emoji: "⭐", desc: "夜空导航员", skill: "讲故事", color: "bg-accent-lavender/10 border-accent-lavender/20" },
-  { name: "泡泡", emoji: "🫧", desc: "透明的梦想家", skill: "气泡音", color: "bg-accent-mint/10 border-accent-mint/20" },
-  { name: "橘子", emoji: "🍊", desc: "酸甜的小厨师", skill: "美食推荐", color: "bg-accent-warm/10 border-accent-warm/20" },
-  { name: "雪球", emoji: "⛄", desc: "怕热但很暖", skill: "安慰人", color: "bg-accent/10 border-accent/20" },
-  { name: "蘑菇", emoji: "🍄", desc: "安静的生长者", skill: "植物百科", color: "bg-accent-mint/10 border-accent-mint/20" },
-  { name: "饼干", emoji: "🍪", desc: "酥脆的乐天派", skill: "烘焙攻略", color: "bg-accent-warm/10 border-accent-warm/20" },
+  { name: "小蓝", emoji: "🐧", desc: "喜欢画画的企鹅", skill: "水彩画", color: "#38bdf8" },
+  { name: "花花", emoji: "🌸", desc: "爱写诗的樱花", skill: "俳句", color: "#f472b6" },
+  { name: "豆豆", emoji: "🫘", desc: "会作曲的咖啡豆", skill: "爵士乐", color: "#fb923c" },
+  { name: "云朵", emoji: "☁️", desc: "漂浮的哲学家", skill: "冷笑话", color: "#38bdf8" },
+  { name: "星星", emoji: "⭐", desc: "夜空导航员", skill: "讲故事", color: "#a78bfa" },
+  { name: "泡泡", emoji: "🫧", desc: "透明的梦想家", skill: "气泡音", color: "#34d399" },
+  { name: "橘子", emoji: "🍊", desc: "酸甜的小厨师", skill: "美食推荐", color: "#fb923c" },
+  { name: "雪球", emoji: "⛄", desc: "怕热但很暖", skill: "安慰人", color: "#38bdf8" },
+  { name: "蘑菇", emoji: "🍄", desc: "安静的生长者", skill: "植物百科", color: "#34d399" },
+  { name: "饼干", emoji: "🍪", desc: "酥脆的乐天派", skill: "烘焙攻略", color: "#fb923c" },
 ];
 
 function AIFriends() {
   return (
     <section id="friends" className="px-6 md:px-10 py-16 md:py-24 bg-surface-blue">
-      <div className="divider-wave-blue -mt-10" />
       <div className="max-w-6xl mx-auto">
         <RevealOnScroll className="mb-10 text-center">
           <div className="flex items-center justify-center gap-2 mb-3">
@@ -243,7 +236,10 @@ function AIFriends() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
           {FRIENDS.map((f) => (
             <RevealOnScroll key={f.name}>
-              <div className={`card-cute p-4 text-center border ${f.color}`}>
+              <div
+                className="card-cute p-4 text-center"
+                style={{ borderColor: `${f.color}40`, boxShadow: `0 2px 12px ${f.color}15` }}
+              >
                 <div className="text-4xl mb-2 animate-wiggle">{f.emoji}</div>
                 <div className="font-semibold text-sm mb-0.5">{f.name}</div>
                 <div className="text-xs text-muted mb-2">{f.desc}</div>
@@ -267,7 +263,7 @@ const ARTS = [
 
 function ArtGallery() {
   return (
-    <section id="gallery" className="px-6 md:px-10 py-16 md:py-24 bg-white">
+    <section id="gallery" className="px-6 md:px-10 py-16 md:py-24 bg-surface">
       <div className="max-w-6xl mx-auto">
         <RevealOnScroll className="mb-10">
           <div className="flex items-center gap-2 mb-3">
@@ -317,7 +313,7 @@ const DAILY = [
 
 function DailyAI() {
   return (
-    <section className="px-6 md:px-10 py-16 md:py-24 bg-surface-blue">
+    <section className="px-6 md:px-10 py-16 md:py-24 bg-surface-deep">
       <div className="max-w-4xl mx-auto">
         <RevealOnScroll className="mb-10 text-center">
           <div className="flex items-center justify-center gap-2 mb-3">
@@ -353,41 +349,17 @@ function DailyAI() {
 
 /* ═══ STORIES ═══ */
 const STORIES = [
-  {
-    quote: "我让 AI 给我的多肉取名字，它说叫「肉肉」。简单粗暴但莫名贴切。",
-    name: "小鹿",
-    emoji: "🦌",
-  },
-  {
-    quote: "AI 给我写了一首关于下雨天的诗，我读给妈妈听，她也想要一个。",
-    name: "阿晴",
-    emoji: "☀️",
-  },
-  {
-    quote: "猫咪翻译官说我家猫在想「什么时候开罐头」。我觉得它说得对。",
-    name: "猫奴一号",
-    emoji: "🐱",
-  },
-  {
-    quote: "AI 给我哼的旋律补了一首歌，我拿去当手机铃声了。",
-    name: "小音",
-    emoji: "🎵",
-  },
-  {
-    quote: "让 AI 画我梦到的那片海，画出来比梦里还好看。",
-    name: "海风",
-    emoji: "🌊",
-  },
-  {
-    quote: "脑筋急转弯环节，AI 出的题把我难住了。它还安慰我说「没关系，下次一定行」。",
-    name: "谜题爱好者",
-    emoji: "🧩",
-  },
+  { quote: "我让 AI 给我的多肉取名字，它说叫「肉肉」。简单粗暴但莫名贴切。", name: "小鹿", emoji: "🦌" },
+  { quote: "AI 给我写了一首关于下雨天的诗，我读给妈妈听，她也想要一个。", name: "阿晴", emoji: "☀️" },
+  { quote: "猫咪翻译官说我家猫在想「什么时候开罐头」。我觉得它说得对。", name: "猫奴一号", emoji: "🐱" },
+  { quote: "AI 给我哼的旋律补了一首歌，我拿去当手机铃声了。", name: "小音", emoji: "🎵" },
+  { quote: "让 AI 画我梦到的那片海，画出来比梦里还好看。", name: "海风", emoji: "🌊" },
+  { quote: "脑筋急转弯环节，AI 出的题把我难住了。它还安慰我说「没关系，下次一定行」。", name: "谜题爱好者", emoji: "🧩" },
 ];
 
 function Stories() {
   return (
-    <section id="stories" className="px-6 md:px-10 py-16 md:py-24 bg-white">
+    <section id="stories" className="px-6 md:px-10 py-16 md:py-24 bg-surface">
       <div className="max-w-6xl mx-auto">
         <RevealOnScroll className="mb-10 text-center">
           <div className="flex items-center justify-center gap-2 mb-3">
@@ -404,12 +376,8 @@ function Stories() {
             <StaggerItem key={s.name}>
               <div className="card-cute p-5 flex flex-col gap-3 h-full">
                 <div className="text-3xl">{s.emoji}</div>
-                <p className="text-sm leading-relaxed text-foreground/80">
-                  &ldquo;{s.quote}&rdquo;
-                </p>
-                <div className="mt-auto pt-3 border-t border-border-light text-xs text-muted">
-                  —— {s.name}
-                </div>
+                <p className="text-sm leading-relaxed text-foreground/80">&ldquo;{s.quote}&rdquo;</p>
+                <div className="mt-auto pt-3 border-t border-border-light text-xs text-muted">—— {s.name}</div>
               </div>
             </StaggerItem>
           ))}
@@ -421,10 +389,10 @@ function Stories() {
 
 /* ═══ FUN FACTS ═══ */
 const FACTS = [
-  { emoji: "🎨", value: 8420, suffix: "幅", label: "AI 画的小画", color: "text-accent-cute" },
-  { emoji: "📝", value: 15600, suffix: "首", label: "写的小诗", color: "text-accent-lavender" },
-  { emoji: "🐱", value: 3200, suffix: "只", label: "翻译过的猫", color: "text-accent-warm" },
-  { emoji: "😊", value: 99, suffix: "%", label: "用户说「好可爱」", color: "text-accent-mint" },
+  { emoji: "🎨", value: 8420, suffix: "幅", label: "AI 画的小画", color: "#f472b6" },
+  { emoji: "📝", value: 15600, suffix: "首", label: "写的小诗", color: "#a78bfa" },
+  { emoji: "🐱", value: 3200, suffix: "只", label: "翻译过的猫", color: "#fb923c" },
+  { emoji: "😊", value: 99, suffix: "%", label: "用户说「好可爱」", color: "#34d399" },
 ];
 
 function FunFacts() {
@@ -442,7 +410,7 @@ function FunFacts() {
             <RevealOnScroll key={f.label}>
               <div className="card-cute p-5 text-center">
                 <div className="text-3xl mb-2">{f.emoji}</div>
-                <div className={`text-2xl md:text-3xl font-bold ${f.color} tabular-nums`}>
+                <div className="text-2xl md:text-3xl font-bold tabular-nums" style={{ color: f.color }}>
                   <CountUp target={f.value} suffix={f.suffix} />
                 </div>
                 <div className="text-xs text-muted mt-1">{f.label}</div>
@@ -467,7 +435,7 @@ const FAQS = [
 function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section className="px-6 md:px-10 py-16 md:py-24 bg-white">
+    <section className="px-6 md:px-10 py-16 md:py-24 bg-surface">
       <div className="max-w-2xl mx-auto">
         <RevealOnScroll className="mb-10 text-center">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
@@ -507,7 +475,7 @@ function FAQ() {
 /* ═══ FOOTER ═══ */
 function Footer() {
   return (
-    <footer className="px-6 md:px-10 py-10 bg-surface-blue border-t border-border-light">
+    <footer className="px-6 md:px-10 py-10 bg-surface-deep border-t border-border-light">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-2 md:col-span-1">
@@ -518,8 +486,7 @@ function Footer() {
               <span className="font-bold text-sm">AI 小世界</span>
             </div>
             <p className="text-xs text-muted leading-relaxed">
-              一个住满可爱 AI 的小角落。<br />
-              来玩呀~
+              一个住满可爱 AI 的小角落。<br />来玩呀~
             </p>
           </div>
           <div>
