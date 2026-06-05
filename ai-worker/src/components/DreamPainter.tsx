@@ -18,27 +18,26 @@ export function DreamPainter() {
 
   const canGenerate = description.trim().length >= 2 && selectedStyle !== null;
 
-  const handleGenerate = async () => {
+  const handleGenerate = () => {
     if (!canGenerate) return;
     const style = STYLES.find((s) => s.id === selectedStyle)!;
     const fullPrompt = description.trim() + style.suffix;
-    const url = `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent(fullPrompt)}&image_size=landscape_4_3`;
+    const url = `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent(fullPrompt)}&image_size=landscape_4_3&_t=${Date.now()}`;
 
     setLoading(true);
     setError(null);
-    if (imageUrl) URL.revokeObjectURL(imageUrl);
     setImageUrl(null);
 
-    try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error("生成失败");
-      const blob = await res.blob();
-      setImageUrl(URL.createObjectURL(blob));
-    } catch {
-      setError("生成失败，请稍后重试");
-    } finally {
+    const img = new Image();
+    img.onload = () => {
+      setImageUrl(url);
       setLoading(false);
-    }
+    };
+    img.onerror = () => {
+      setError("生成失败，请稍后重试");
+      setLoading(false);
+    };
+    img.src = url;
   };
 
   return (
