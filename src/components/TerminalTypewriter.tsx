@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect -- Typewriter animation requires timer-driven state updates */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -15,16 +16,22 @@ const LINES = [
 ];
 
 export function TerminalTypewriter() {
-  const [currentLine, setCurrentLine] = useState(0);
-  const [displayed, setDisplayed] = useState("");
-  const [phase, setPhase] = useState<"typing" | "pausing" | "erasing">("typing");
   const reduce = useReducedMotion();
+  const [currentLine, setCurrentLine] = useState(0);
+  const [displayed, setDisplayed] = useState(reduce ? LINES[0] : "");
+  const [phase, setPhase] = useState<"typing" | "pausing" | "erasing">("typing");
 
+  // Sync displayed text when reduce-motion preference changes
   useEffect(() => {
     if (reduce) {
       setDisplayed(LINES[currentLine]);
-      return;
     }
+  // Only react to reduce changes, not currentLine
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reduce]);
+
+  useEffect(() => {
+    if (reduce) return;
 
     const line = LINES[currentLine];
 

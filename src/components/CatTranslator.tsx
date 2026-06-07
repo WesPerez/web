@@ -94,41 +94,23 @@ export function CatTranslator() {
   const selectedBehavior = behaviors.find((b) => b.key === selected);
 
   return (
-    <div style={{ maxWidth: 600, margin: "0 auto" }}>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
-          gap: 12,
-        }}
-      >
+    <div className="max-w-[600px] mx-auto">
+      <div className="grid grid-cols-2 gap-3" role="group" aria-label="选择猫咪行为">
         {behaviors.map((b) => (
           <button
             key={b.key}
             onClick={() => translate(b.key)}
-            className="card-cute"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              padding: "14px 18px",
-              cursor: "pointer",
-              fontSize: 15,
-              border:
-                selected === b.key
-                  ? "2px solid #fb923c"
-                  : "1.5px solid #c7ddf5",
-              borderRadius: 20,
-              background:
-                selected === b.key ? "#fff7ed" : "rgba(255,255,255,0.75)",
-              backdropFilter: "blur(8px)",
-              transition: "all 0.2s ease",
-              color: "#334155",
-              fontWeight: selected === b.key ? 600 : 400,
-              textAlign: "left",
-            }}
+            aria-pressed={selected === b.key}
+            className={`
+              card-cute flex items-center gap-2 px-4 py-3.5 cursor-pointer text-[15px] text-left
+              transition-all duration-200
+              ${selected === b.key
+                ? "border-2 border-orange-400 bg-orange-50 font-semibold"
+                : "border border-blue-100 bg-white/75 font-normal"
+              }
+            `}
           >
-            <span style={{ fontSize: 24 }}>{b.emoji}</span>
+            <span className="text-2xl" aria-hidden="true">{b.emoji}</span>
             <span>{b.label}</span>
           </button>
         ))}
@@ -136,69 +118,33 @@ export function CatTranslator() {
 
       {result && selectedBehavior && (
         <div
-          className="card-cute"
-          style={{
-            marginTop: 20,
-            padding: "24px 28px",
-            textAlign: "center",
-            opacity: showResult ? 1 : 0,
-            transform: showResult ? "translateY(0)" : "translateY(12px)",
-            transition: "all 0.4s ease",
-          }}
+          className={`
+            card-cute mt-5 p-6 text-center
+            transition-all duration-300
+            ${showResult ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}
+          `}
+          role="status"
+          aria-live="polite"
         >
           <div
-            style={{
-              fontSize: 48,
-              animation: showResult ? "catBounce 0.6s ease" : "none",
-              marginBottom: 12,
-            }}
+            className="text-5xl mb-3"
+            aria-hidden="true"
           >
-            {selectedBehavior.emoji}
+            <span className={showResult ? "animate-cat-bounce inline-block" : ""}>
+              {selectedBehavior.emoji}
+            </span>
           </div>
-          <div
-            style={{
-              fontSize: 17,
-              lineHeight: 1.7,
-              color: "#1e293b",
-              marginBottom: 20,
-            }}
-          >
+          <p className="text-[17px] leading-relaxed text-slate-800 mb-5">
             「{result}」
-          </div>
+          </p>
           <button
             onClick={reTranslate}
-            style={{
-              background: "#fb923c",
-              color: "#fff",
-              border: "none",
-              borderRadius: 14,
-              padding: "10px 24px",
-              fontSize: 14,
-              fontWeight: 600,
-              cursor: "pointer",
-              transition: "background 0.2s",
-            }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.background = "#f97316")
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.background = "#fb923c")
-            }
+            className="bg-orange-400 hover:bg-orange-500 active:bg-orange-600 text-white rounded-[14px] px-6 py-2.5 text-sm font-semibold transition-colors cursor-pointer"
           >
             再翻译一次 🔄
           </button>
         </div>
       )}
-
-      <style>{`
-        @keyframes catBounce {
-          0% { transform: scale(1); }
-          30% { transform: scale(1.3) translateY(-8px); }
-          50% { transform: scale(0.9); }
-          70% { transform: scale(1.1) translateY(-4px); }
-          100% { transform: scale(1) translateY(0); }
-        }
-      `}</style>
     </div>
   );
 }

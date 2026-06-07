@@ -72,7 +72,7 @@ function getWaveform(mood: Mood): OscillatorType {
 
 function generateMelody(mood: Mood): NoteInfo[] {
   const moodData = MOODS.find((m) => m.key === mood)!;
-  const count = 12 + Math.floor(Math.random() * 5); // 12-16
+  const count = 12 + Math.floor(Math.random() * 5);
   return Array.from({ length: count }, () => {
     const idx = Math.floor(Math.random() * moodData.scale.length);
     return { ...moodData.scale[idx] };
@@ -128,7 +128,6 @@ export function MelodySpirit() {
           osc.detune.value = Math.random() * 12 - 6;
         }
 
-        // ADSR envelope
         const attack = duration * 0.05;
         const decay = duration * 0.1;
         const sustainLevel = 0.3;
@@ -157,7 +156,6 @@ export function MelodySpirit() {
       timersRef.current.push(tid);
     });
 
-    // Auto-stop when melody finishes
     const endTid = window.setTimeout(() => {
       stopPlayback();
     }, melody.length * TEMPO_MAP[tempo] + 100);
@@ -177,7 +175,6 @@ export function MelodySpirit() {
     }
   }, [playing, playMelody, stopPlayback]);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       playingRef.current = false;
@@ -190,44 +187,27 @@ export function MelodySpirit() {
   }, []);
 
   return (
-    <div
-      className="card-cute"
-      style={{
-        background: "#dbeefe",
-        padding: 24,
-        borderRadius: 20,
-        maxWidth: 480,
-        margin: "0 auto",
-      }}
-    >
-      <h3 style={{ textAlign: "center", marginBottom: 16, fontSize: 18 }}>
+    <div className="card-cute bg-sky-100 p-6 max-w-[480px] mx-auto">
+      <h3 className="text-center mb-4 text-lg font-semibold">
         🎵 旋律精灵
       </h3>
 
       {/* Mood selection */}
-      <div style={{ marginBottom: 16 }}>
-        <div style={{ fontSize: 13, marginBottom: 8, color: "#555" }}>
-          选择心情
-        </div>
-        <div style={{ display: "flex", gap: 8 }}>
+      <div className="mb-4">
+        <div className="text-[13px] mb-2 text-gray-500">选择心情</div>
+        <div className="flex gap-2" role="group" aria-label="选择心情">
           {MOODS.map((m) => (
             <button
               key={m.key}
               onClick={() => setMood(m.key)}
-              style={{
-                flex: 1,
-                padding: "8px 4px",
-                borderRadius: 12,
-                border:
-                  mood === m.key
-                    ? "2px solid #34d399"
-                    : "1.5px solid #c7ddf5",
-                background:
-                  mood === m.key ? "rgba(52,211,153,0.1)" : "#fff",
-                cursor: "pointer",
-                fontSize: 13,
-                transition: "all 0.2s",
-              }}
+              aria-pressed={mood === m.key}
+              className={`
+                flex-1 py-2 px-1 rounded-xl border text-[13px] transition-all duration-200 cursor-pointer
+                ${mood === m.key
+                  ? "border-2 border-emerald-400 bg-emerald-400/10 font-semibold"
+                  : "border border-blue-100 bg-white font-normal"
+                }
+              `}
             >
               {m.emoji} {m.key}
             </button>
@@ -236,27 +216,21 @@ export function MelodySpirit() {
       </div>
 
       {/* Tempo selection */}
-      <div style={{ marginBottom: 16 }}>
-        <div style={{ fontSize: 13, marginBottom: 8, color: "#555" }}>
-          选择速度
-        </div>
-        <div style={{ display: "flex", gap: 8 }}>
+      <div className="mb-4">
+        <div className="text-[13px] mb-2 text-gray-500">选择速度</div>
+        <div className="flex gap-2" role="group" aria-label="选择速度">
           {(["慢板", "行板", "快板"] as Tempo[]).map((t) => (
             <button
               key={t}
               onClick={() => setTempo(t)}
-              style={{
-                flex: 1,
-                padding: "8px 4px",
-                borderRadius: 12,
-                border:
-                  tempo === t ? "2px solid #38bdf8" : "1.5px solid #c7ddf5",
-                background:
-                  tempo === t ? "rgba(56,189,248,0.1)" : "#fff",
-                cursor: "pointer",
-                fontSize: 13,
-                transition: "all 0.2s",
-              }}
+              aria-pressed={tempo === t}
+              className={`
+                flex-1 py-2 px-1 rounded-xl border text-[13px] transition-all duration-200 cursor-pointer
+                ${tempo === t
+                  ? "border-2 border-sky-400 bg-sky-400/10 font-semibold"
+                  : "border border-blue-100 bg-white font-normal"
+                }
+              `}
             >
               {t}
             </button>
@@ -267,59 +241,27 @@ export function MelodySpirit() {
       {/* Generate button */}
       <button
         onClick={handleGenerate}
-        style={{
-          display: "block",
-          width: "100%",
-          padding: "10px 0",
-          borderRadius: 14,
-          border: "none",
-          background: "linear-gradient(135deg, #38bdf8, #34d399)",
-          color: "#fff",
-          fontSize: 15,
-          fontWeight: 600,
-          cursor: "pointer",
-          marginBottom: 16,
-        }}
+        className="block w-full py-2.5 rounded-[14px] border-none bg-gradient-to-r from-sky-400 to-emerald-400 text-white text-[15px] font-semibold cursor-pointer mb-4 hover:opacity-90 active:opacity-80 transition-opacity"
       >
         生成旋律
       </button>
 
       {/* Note display */}
       {melody.length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 6,
-            flexWrap: "wrap",
-            marginBottom: 16,
-            minHeight: 40,
-          }}
-        >
+        <div className="flex justify-center gap-1.5 flex-wrap mb-4 min-h-[40px]" aria-label="音符序列">
           {melody.map((note, i) => {
             const isCurrent = i === currentIdx;
             return (
               <div
                 key={i}
-                style={{
-                  width: 28,
-                  height: 28,
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 10,
-                  fontWeight: 600,
-                  background: isCurrent ? "#38bdf8" : "#fff",
-                  color: isCurrent ? "#fff" : "#555",
-                  border: isCurrent
-                    ? "2px solid #38bdf8"
-                    : "1.5px solid #c7ddf5",
-                  transform: isCurrent
-                    ? "translateY(-6px)"
-                    : "translateY(0)",
-                  transition: "transform 0.15s ease, background 0.15s ease",
-                }}
+                className={`
+                  w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-semibold
+                  border transition-all duration-150
+                  ${isCurrent
+                    ? "bg-sky-400 text-white border-sky-400 -translate-y-1.5"
+                    : "bg-white text-gray-500 border-blue-100"
+                  }
+                `}
               >
                 {note.name}
               </div>
@@ -330,22 +272,15 @@ export function MelodySpirit() {
 
       {/* Play / Stop */}
       {melody.length > 0 && (
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div className="flex justify-center">
           <button
             onClick={handlePlayStop}
-            style={{
-              width: 48,
-              height: 48,
-              borderRadius: "50%",
-              border: "2px solid #c7ddf5",
-              background: playing ? "#fef3c7" : "#fff",
-              cursor: "pointer",
-              fontSize: 18,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "all 0.2s",
-            }}
+            aria-label={playing ? "停止播放" : "播放旋律"}
+            className={`
+              w-12 h-12 rounded-full border-2 border-blue-100 flex items-center justify-center
+              text-lg transition-all duration-200 cursor-pointer
+              ${playing ? "bg-amber-100" : "bg-white hover:bg-sky-50"}
+            `}
           >
             {playing ? "⏸" : "▶"}
           </button>

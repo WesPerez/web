@@ -64,28 +64,33 @@ export function PoemHelper() {
   };
 
   return (
-    <div className="card-cute" style={{ background: "#dbeefe", border: "1px solid #c7ddf5" }}>
-      <h3 className="text-lg font-semibold mb-4 text-gray-800">✨ 诗歌生成器</h3>
+    <div className="card-cute bg-sky-100 border border-blue-100 p-6">
+      <h3 className="text-lg font-semibold mb-4 text-gray-800">
+        ✨ 诗歌生成器
+      </h3>
 
       <input
         type="text"
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
         placeholder="输入一个词，比如：月亮、春天、咖啡..."
+        aria-label="输入关键词"
         className="w-full rounded-lg px-4 py-2.5 text-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-300 mb-4 bg-white"
       />
 
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-4" role="group" aria-label="选择诗歌风格">
         {STYLES.map((s) => (
           <button
             key={s}
             onClick={() => setStyle(s)}
-            className="px-4 py-1.5 rounded-full text-sm transition-all"
-            style={{
-              border: style === s ? "2px solid #a78bfa" : "1px solid #c7ddf5",
-              background: style === s ? "#ede9fe" : "white",
-              color: style === s ? "#6d28d9" : "#6b7280",
-            }}
+            aria-pressed={style === s}
+            className={`
+              px-4 py-1.5 rounded-full text-sm transition-all duration-200 cursor-pointer
+              ${style === s
+                ? "border-2 border-violet-400 bg-violet-50 text-violet-800 font-semibold"
+                : "border border-blue-100 bg-white text-gray-500 font-normal"
+              }
+            `}
           >
             {s}
           </button>
@@ -95,8 +100,7 @@ export function PoemHelper() {
       <button
         onClick={handleGenerate}
         disabled={!keyword.trim()}
-        className="w-full py-2.5 rounded-lg text-white text-sm font-medium transition-opacity disabled:opacity-40"
-        style={{ background: "#a78bfa" }}
+        className="w-full py-2.5 rounded-lg text-white text-sm font-medium bg-violet-400 hover:bg-violet-500 active:bg-violet-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
         生成诗歌
       </button>
@@ -104,14 +108,13 @@ export function PoemHelper() {
       {poem && (
         <div className="mt-4">
           <div
-            className="rounded-xl p-6 text-center"
-            style={{
-              background: "white",
-              border: "1px solid #c7ddf5",
-              lineHeight: 2,
-              fontSize: "1.05rem",
-              fontStyle: style === "现代诗" ? "italic" : "normal",
-            }}
+            className={`
+              rounded-xl p-6 text-center bg-white border border-blue-100
+              text-[1.05rem] leading-loose
+              ${style === "现代诗" ? "italic" : ""}
+            `}
+            role="status"
+            aria-live="polite"
           >
             {poem.split("\n").map((line, i) => (
               <div key={i}>{line}</div>
@@ -121,15 +124,16 @@ export function PoemHelper() {
           <div className="flex gap-2 mt-3">
             <button
               onClick={handleRegenerate}
-              className="flex-1 py-2 rounded-lg text-sm transition-opacity"
-              style={{ background: "white", border: "1px solid #c7ddf5", color: "#6b7280" }}
+              className="flex-1 py-2 rounded-lg text-sm bg-white border border-blue-100 text-gray-500 hover:bg-gray-50 transition-colors cursor-pointer"
             >
               换一首
             </button>
             <button
               onClick={handleCopy}
-              className="flex-1 py-2 rounded-lg text-sm text-white transition-opacity"
-              style={{ background: copied ? "#6ee7b7" : "#a78bfa" }}
+              className={`
+                flex-1 py-2 rounded-lg text-sm text-white transition-colors cursor-pointer
+                ${copied ? "bg-emerald-300" : "bg-violet-400 hover:bg-violet-500"}
+              `}
             >
               {copied ? "已复制!" : "复制"}
             </button>
